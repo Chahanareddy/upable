@@ -3,12 +3,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import './FutureCareer.css';
 import axios from "axios";
 
-
 function FutureCareer() {
   const navigate = useNavigate();
   const location = useLocation();
   const { job } = location.state || {};
-
 
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({});
@@ -42,11 +40,8 @@ function FutureCareer() {
   };
 
   const handleConfirm = () => {
-    navigate("/results", {
-      state: {
-        job,
-        career: selectedCareer || finalCareer,
-      },
+    navigate("/career-chat", {
+      state: { job, career: selectedCareer || finalCareer }
     });
   };
 
@@ -67,127 +62,81 @@ function FutureCareer() {
           <p>What career do you have in mind?</p>
           <input
             type="text"
-            onBlur={(e) => handleInput("initialCareer", e.target.value)}
             placeholder="e.g. Software Engineer"
+            onBlur={(e) => handleInput("initialCareer", e.target.value)}
           />
         </>
       )}
 
-{step === 3 && (
-  <>
-    <p>Do you prefer working in teams or alone?</p>
-    <div style={{ display: "flex", gap: "1rem" }}>
-      {["Teams", "Alone"].map((option) => (
-        <button
-          key={option}
-          onClick={() => handleInput("teamStyle", option)}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: "1px solid gray",
-            backgroundColor: "#fff",
-            cursor: "pointer",
-          }}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  </>
-)}
+      {step === 3 && (
+        <>
+          <p>Do you prefer working in teams or alone?</p>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            {["Teams", "Alone"].map((option) => (
+              <button key={option} onClick={() => handleInput("teamStyle", option)}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
-{step === 4 && (
-  <>
-    <p>Do you prefer remote, hybrid, or on-site work?</p>
-    <div style={{ display: "flex", gap: "1rem" }}>
-      {["Remote", "Hybrid", "On-site"].map((option) => (
-        <button
-          key={option}
-          onClick={() => handleInput("workType", option)}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: "1px solid gray",
-            backgroundColor: "#fff",
-            cursor: "pointer",
-          }}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  </>
-)}
+      {step === 4 && (
+        <>
+          <p>Do you prefer remote, hybrid, or on-site work?</p>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            {["Remote", "Hybrid", "On-site"].map((option) => (
+              <button key={option} onClick={() => handleInput("workType", option)}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
+      {step === 5 && (
+        <>
+          <p>Do you enjoy building things or solving problems more?</p>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            {["Building", "Solving problems"].map((option) => (
+              <button key={option} onClick={() => {
+                handleInput("interestFocus", option);
+                getGeminiSuggestions(); // Trigger Gemini after this
+              }}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
-{step === 5 && (
-  <>
-    <p>Do you enjoy building things or solving problems more?</p>
-    <div style={{ display: "flex", gap: "1rem" }}>
-      {["Building", "Solving problems"].map((option) => (
-        <button
-          key={option}
-          onClick={() => handleInput("interestFocus", option)}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: "1px solid gray",
-            backgroundColor: "#fff",
-            cursor: "pointer",
-          }}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  </>
-)}
-
-
-{step === 6 && (
-  <>
-    <p>What type of work are you interested in?</p>
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
-      {[
-        "Technical",
-        "Hands-on",
-        "Creative",
-        "People-oriented",
-        "Business",
-        "Medical",
-        "Analytical",
-        "Artistic",
-        "Social work"
-      ].map((option) => (
-        <button
-          key={option}
-          onClick={() => setAnswers((prev) => ({ ...prev, interestArea: option }))}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: answers.interestArea === option ? "2px solid black" : "1px solid gray",
-            backgroundColor: answers.interestArea === option ? "#e0e0e0" : "#fff",
-            cursor: "pointer",
-          }}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-    <button
-      onClick={() => setStep(7)}
-      disabled={!answers.interestArea}
-    >
-      Next
-    </button>
-  </>
-)}
-
-
-      {[ 6].includes(step - 1) && step !== 99 && (
-        <button style={{ marginTop: "1rem" }} onClick={getGeminiSuggestions}>
-          Get Career Suggestions
-        </button>
+      {step === 6 && (
+        <>
+          <p>What type of work are you interested in?</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
+            {[
+              "Technical", "Hands-on", "Creative", "People-oriented",
+              "Business", "Medical", "Analytical", "Artistic", "Social work"
+            ].map((option) => (
+              <button
+                key={option}
+                onClick={() => {
+                  setAnswers((prev) => ({ ...prev, interestArea: option }));
+                  setStep(3); // go to structured Qs next
+                }}
+                style={{
+                  padding: "0.5rem 1rem",
+                  borderRadius: "6px",
+                  border: answers.interestArea === option ? "2px solid black" : "1px solid gray",
+                  backgroundColor: answers.interestArea === option ? "#e0e0e0" : "#fff",
+                  cursor: "pointer",
+                }}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </>
       )}
 
       {loading && <p>Thinking...</p>}
