@@ -7,7 +7,40 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+let sharedChat = null;
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+
+app.post("/gemini-career-chat", async (req, res) => {
+  const { messages } = req.body;
+
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+    // Only create the chat session ONCE
+    if (!sharedChat) {
+      sharedChat = model.startChat({
+        history: messages.map((msg) => ({
+          role: msg.role,
+          parts: [{ text: msg.text }],
+        })),
+      });
+    }
+
+    // Use only the latest user message
+    const lastUserMessage = messages[messages.length - 1].text;
+
+    const result = await sharedChat.sendMessage(lastUserMessage);
+    const reply = result.response.text();
+
+    res.json({ reply });
+  } catch (err) {
+    console.error("Gemini Chat Error:", err.message);
+    res.status(500).json({ error: "Failed to get response from Gemini." });
+  }
+});
+
+
 
 app.post("/get-upskilling", async (req, res) => {
   const { job, career, disability } = req.body;
