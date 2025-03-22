@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import './FutureCareer.css';
 
 function FutureCareer() {
   const [career, setCareer] = useState("");
@@ -8,8 +9,13 @@ function FutureCareer() {
   const { job } = location.state || {};
 
   const handleNext = () => {
+    console.log("Next button clicked");
     if (career.trim() !== "") {
+      console.log("Navigating to /results"); 
       navigate("/results", { state: { job, career } });
+    } else {
+      console.log("Career input is empty"); 
+      alert("Please enter a career before proceeding.");
     }
   };
 
@@ -23,7 +29,7 @@ function FutureCareer() {
         value={career}
         onChange={(e) => setCareer(e.target.value)}
       />
-      <button onClick={handleNext}>Next</button>
+      <button type="button" className="btn btn-primary" onClick={handleNext}>Next</button>
     </div>
   );
 }

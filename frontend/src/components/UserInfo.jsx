@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './UserInfo.css'; // Import a CSS file for styling
+import './UserInfo.css';
 
 function UserInfo() {
   const [formData, setFormData] = useState({
