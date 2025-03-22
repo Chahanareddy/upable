@@ -88,4 +88,49 @@ app.post("/get-upskilling", async (req, res) => {
   }
 });
 
+let quickChatSession = null; // ✅ store chat globally
+
+app.post("/gemini-quick-chat", async (req, res) => {
+  const { messages, career } = req.body;
+
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+    // Only create the session once
+    if (!quickChatSession) {
+      quickChatSession = model.startChat({
+        history: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `The user is interested in becoming a ${career}. Help them by answering each question they ask with 1 short sentence.`,
+              },
+            ],
+          },
+          {
+            role: "model",
+            parts: [{ text: "Got it. I'm ready to help!" }],
+          },
+        ],
+      });
+    }
+
+    const userMessage = messages[messages.length - 1].text;
+
+    const result = await quickChatSession.sendMessage(userMessage);
+    let reply = result.response.text().trim();
+
+    // Force 1 sentence
+    reply = reply.split(".")[0] + ".";
+
+    res.json({ reply });
+  } catch (err) {
+    console.error("Gemini Quick Chat Error:", err.message);
+    res.status(500).json({ error: "Failed to respond." });
+  }
+});
+
+
+
 app.listen(5000, () => console.log("✅ Server running on port 5000"));

@@ -45,11 +45,8 @@ function FutureCareer() {
   };
 
   const handleConfirm = () => {
-    navigate("/results", {
-      state: {
-        job,
-        career: selectedCareer || finalCareer,
-      },
+    navigate("/career-chat", {
+      state: { job, career: selectedCareer || finalCareer }
     });
   };
 
@@ -70,8 +67,8 @@ function FutureCareer() {
           <p>What career do you have in mind?</p>
           <input
             type="text"
-            onBlur={(e) => handleInput("initialCareer", e.target.value)}
             placeholder="e.g. Software Engineer"
+            onBlur={(e) => handleInput("initialCareer", e.target.value)}
           />
         </>
       )}
@@ -81,11 +78,7 @@ function FutureCareer() {
           <p>Do you prefer working in teams or alone?</p>
           <div style={{ display: "flex", gap: "1rem" }}>
             {["Teams", "Alone"].map((option) => (
-              <button
-                className="btn btn-primary"
-                key={option}
-                onClick={() => handleInput("teamStyle", option)}
-              >
+              <button key={option} onClick={() => handleInput("teamStyle", option)} className="btn btn-outline-secondary">
                 {option}
               </button>
             ))}
@@ -98,11 +91,7 @@ function FutureCareer() {
           <p>Do you prefer remote, hybrid, or on-site work?</p>
           <div style={{ display: "flex", gap: "1rem" }}>
             {["Remote", "Hybrid", "On-site"].map((option) => (
-              <button
-                className="btn btn-primary"
-                key={option}
-                onClick={() => handleInput("workType", option)}
-              >
+              <button key={option} onClick={() => handleInput("workType", option)} className="btn btn-outline-secondary">
                 {option}
               </button>
             ))}
@@ -116,9 +105,12 @@ function FutureCareer() {
           <div style={{ display: "flex", gap: "1rem" }}>
             {["Building", "Solving problems"].map((option) => (
               <button
-                className="btn btn-primary"
                 key={option}
-                onClick={() => handleInput("interestFocus", option)}
+                onClick={() => {
+                  handleInput("interestFocus", option);
+                  getGeminiSuggestions(); // Trigger Gemini here
+                }}
+                className="btn btn-outline-secondary"
               >
                 {option}
               </button>
@@ -143,9 +135,12 @@ function FutureCareer() {
               "Social work"
             ].map((option) => (
               <button
-                className="btn btn-primary"
                 key={option}
-                onClick={() => setAnswers((prev) => ({ ...prev, interestArea: option }))}
+                onClick={() => {
+                  setAnswers((prev) => ({ ...prev, interestArea: option }));
+                  setStep(3); // ➡️ continue to follow-up questions
+                }}
+                className="btn btn-outline-secondary"
               >
                 {option}
               </button>
@@ -165,6 +160,7 @@ function FutureCareer() {
         <button type="button" className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={getGeminiSuggestions}>
           Get Career Suggestions
         </button>
+        </>
       )}
 
       {loading && <p>Thinking...</p>}
