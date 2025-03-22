@@ -57,8 +57,8 @@ function FutureCareer() {
       {step === 1 && (
         <>
           <p>Do you already know what career you want to pursue?</p>
-          <button onClick={handleYes}>Yes</button>
-          <button onClick={handleNo}>No</button>
+          <button type="button" className="btn btn-primary" onClick={handleYes}>Yes</button>
+          <button type="button" className="btn btn-primary" onClick={handleNo}>No</button>
         </>
       )}
 
@@ -185,7 +185,7 @@ function FutureCareer() {
 
 
       {[ 6].includes(step - 1) && step !== 99 && (
-        <button style={{ marginTop: "1rem" }} onClick={getGeminiSuggestions}>
+        <button type="button" className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={getGeminiSuggestions}>
           Get Career Suggestions
         </button>
       )}
@@ -219,7 +219,7 @@ function FutureCareer() {
             placeholder="Type your own career..."
           />
 
-          <button onClick={handleConfirm} style={{ marginTop: "1rem" }}>
+          <button type="button" onClick={handleConfirm} style={{ marginTop: "1rem" }}>
             Continue
           </button>
         </>
