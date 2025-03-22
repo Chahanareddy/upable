@@ -40,7 +40,29 @@ app.post("/gemini-career-chat", async (req, res) => {
   }
 });
 
+app.post("/gemini-career-structured", async (req, res) => {
+  const { job, answers } = req.body;
 
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+    const prompt = `
+I am currently working as a ${job}. The user shared these preferences:
+${Object.entries(answers).map(([q, a]) => `${q}: ${a}`).join("\n")}
+
+Please suggest 5 specific career paths that fit these preferences. 
+Return only a plain list (one per line), no explanation or numbering.
+`;
+
+    const result = await model.generateContent(prompt);
+    const lines = result.response.text().split("\n").filter((line) => line.trim());
+
+    res.json({ suggestions: lines });
+  } catch (err) {
+    console.error("Gemini Structured Error:", err.message);
+    res.status(500).json({ error: "Gemini failed to suggest careers." });
+  }
+});
 
 app.post("/get-upskilling", async (req, res) => {
   const { job, career, disability } = req.body;

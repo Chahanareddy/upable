@@ -50,7 +50,8 @@ html, body, #root {
     font-weight: bold;
     margin-bottom: 8px;
     display: block;
-    color: #ffffff; /* White text for labels */
+    color: 
+    #000000; /* White text for labels */
   }
   
   /* Form input and select styling */
@@ -62,15 +63,15 @@ html, body, #root {
     border-radius: 6px;
     font-size: 16px;
     box-sizing: border-box;
-    background-color: #1a1a2e; /* Dark blue background for inputs */
-    color: #ffffff; /* White text for inputs */
+    background-color: #dddde7; /* Dark blue background for inputs */
+    color: #000000; /* White text for inputs */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
   
   /* Placeholder text color */
   .form-input::placeholder,
   .form-select::placeholder {
-    color: #a9a9a9; /* Light gray for placeholder text */
+    color: #140f0f; /* Light gray for placeholder text */
   }
   
 
@@ -97,3 +98,4 @@ html, body, #root {
   .btn:hover {
     background-color: #3e880d; 
   }
+  

@@ -3,80 +3,157 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function FutureCareer() {
-  const [career, setCareer] = useState("");
-  const [messages, setMessages] = useState([]);
-
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
   const location = useLocation();
   const { job } = location.state || {};
 
-  const handleChatSend = async () => {
-    if (!input.trim()) return;
+  const [step, setStep] = useState(1);
+  const [answers, setAnswers] = useState({});
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedCareer, setSelectedCareer] = useState("");
+  const [finalCareer, setFinalCareer] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const updatedMessages = [...messages, { role: "user", text: input }];
-    setMessages(updatedMessages);
-    setInput("");
+  const handleYes = () => setStep(2);
+  const handleNo = () => setStep(6);
+
+  const handleInput = (key, value) => {
+    setAnswers((prev) => ({ ...prev, [key]: value }));
+    setStep((s) => s + 1);
+  };
+
+  const getGeminiSuggestions = async () => {
     setLoading(true);
-
     try {
-      const res = await axios.post("http://localhost:5000/gemini-career-chat", {
-        messages: updatedMessages,
+      const res = await axios.post("http://localhost:5000/gemini-career-structured", {
+        job,
+        answers,
       });
-
-      setMessages([...updatedMessages, { role: "bot", text: res.data.reply }]);
+      setSuggestions(res.data.suggestions);
+      setStep(99);
     } catch (err) {
-      alert("Gemini API error");
+      alert("Gemini failed to generate suggestions.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleNext = () => {
-    if (career.trim() !== "") {
-      navigate("/results", { state: { job, career } });
-    }
+  const handleConfirm = () => {
+    navigate("/results", {
+      state: {
+        job,
+        career: selectedCareer || finalCareer,
+      },
+    });
   };
 
   return (
     <div className="container" style={{ padding: "2rem" }}>
       <h2>Explore Your Future Career</h2>
 
-      {/* Chatbot UI */}
-      <div style={{ maxHeight: "300px", overflowY: "auto", marginBottom: "1rem", background: "#f9f9f9", padding: "1rem", borderRadius: "8px" }}>
-        {messages.map((msg, i) => (
-          <p key={i} style={{ textAlign: msg.role === "user" ? "right" : "left" }}>
-            <strong>{msg.role === "user" ? "You" : "Coach"}:</strong> {msg.text}
-          </p>
-        ))}
-      </div>
+      {step === 1 && (
+        <>
+          <p>Do you already know what career you want to pursue?</p>
+          <button onClick={handleYes}>Yes</button>
+          <button onClick={handleNo}>No</button>
+        </>
+      )}
 
-      <input
-        type="text"
-        placeholder="Ask something about your career..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleChatSend()}
-        style={{ width: "100%", marginBottom: "1rem" }}
-      />
-      <button onClick={handleChatSend} disabled={loading}>
-        {loading ? "Thinking..." : "Send"}
-      </button>
+      {step === 2 && (
+        <>
+          <p>What career do you have in mind?</p>
+          <input
+            type="text"
+            onBlur={(e) => handleInput("initialCareer", e.target.value)}
+            placeholder="e.g. Software Engineer"
+          />
+        </>
+      )}
 
-      <hr style={{ margin: "2rem 0" }} />
+      {step === 3 && (
+        <>
+          <p>Do you prefer working in teams or alone?</p>
+          <input
+            type="text"
+            onBlur={(e) => handleInput("teamStyle", e.target.value)}
+            placeholder="e.g. teams"
+          />
+        </>
+      )}
 
-      {/* Final Career Selection */}
-      <h4>Once you decide, type your final career below:</h4>
-      <input
-        type="text"
-        placeholder="e.g. Data Scientist"
-        value={career}
-        onChange={(e) => setCareer(e.target.value)}
-        style={{ width: "100%", marginBottom: "1rem" }}
-      />
-      <button onClick={handleNext}>Next</button>
+      {step === 4 && (
+        <>
+          <p>Do you prefer remote, hybrid, or on-site work?</p>
+          <input
+            type="text"
+            onBlur={(e) => handleInput("workType", e.target.value)}
+            placeholder="e.g. remote"
+          />
+        </>
+      )}
+
+      {step === 5 && (
+        <>
+          <p>Do you enjoy building things or solving problems more?</p>
+          <input
+            type="text"
+            onBlur={(e) => handleInput("interestFocus", e.target.value)}
+            placeholder="e.g. solving problems"
+          />
+        </>
+      )}
+
+      {step === 6 && (
+        <>
+          <p>What type of work are you interested in?</p>
+          <input
+            type="text"
+            onBlur={(e) => handleInput("interestArea", e.target.value)}
+            placeholder="e.g. technical, creative, hands-on"
+          />
+        </>
+      )}
+
+      {[5, 6].includes(step - 1) && step !== 99 && (
+        <button style={{ marginTop: "1rem" }} onClick={getGeminiSuggestions}>
+          Get Career Suggestions
+        </button>
+      )}
+
+      {loading && <p>Thinking...</p>}
+
+      {step === 99 && (
+        <>
+          <p><strong>Here are some career paths you might like:</strong></p>
+          <ul>
+            {suggestions.map((s, i) => (
+              <li key={i}>
+                <label>
+                  <input
+                    type="radio"
+                    name="career"
+                    value={s}
+                    checked={selectedCareer === s}
+                    onChange={() => setSelectedCareer(s)}
+                  />{" "}
+                  {s}
+                </label>
+              </li>
+            ))}
+          </ul>
+
+          <p>Or type your own career path:</p>
+          <input
+            value={finalCareer}
+            onChange={(e) => setFinalCareer(e.target.value)}
+            placeholder="Type your own career..."
+          />
+
+          <button onClick={handleConfirm} style={{ marginTop: "1rem" }}>
+            Continue
+          </button>
+        </>
+      )}
     </div>
   );
 }
