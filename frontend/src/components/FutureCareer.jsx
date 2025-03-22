@@ -52,8 +52,8 @@ function FutureCareer() {
       {step === 1 && (
         <>
           <p>Do you already know what career you want to pursue?</p>
-          <button onClick={handleYes}>Yes</button>
-          <button onClick={handleNo}>No</button>
+          <button type="button" className="btn btn-primary" onClick={handleYes}>Yes</button>
+          <button type="button" className="btn btn-primary" onClick={handleNo}>No</button>
         </>
       )}
 
@@ -73,7 +73,7 @@ function FutureCareer() {
           <p>Do you prefer working in teams or alone?</p>
           <div style={{ display: "flex", gap: "1rem" }}>
             {["Teams", "Alone"].map((option) => (
-              <button key={option} onClick={() => handleInput("teamStyle", option)}>
+              <button key={option} onClick={() => handleInput("teamStyle", option)} className="btn btn-outline-secondary">
                 {option}
               </button>
             ))}
@@ -86,7 +86,7 @@ function FutureCareer() {
           <p>Do you prefer remote, hybrid, or on-site work?</p>
           <div style={{ display: "flex", gap: "1rem" }}>
             {["Remote", "Hybrid", "On-site"].map((option) => (
-              <button key={option} onClick={() => handleInput("workType", option)}>
+              <button key={option} onClick={() => handleInput("workType", option)} className="btn btn-outline-secondary">
                 {option}
               </button>
             ))}
@@ -99,10 +99,14 @@ function FutureCareer() {
           <p>Do you enjoy building things or solving problems more?</p>
           <div style={{ display: "flex", gap: "1rem" }}>
             {["Building", "Solving problems"].map((option) => (
-              <button key={option} onClick={() => {
-                handleInput("interestFocus", option);
-                getGeminiSuggestions(); // Trigger Gemini after this
-              }}>
+              <button
+                key={option}
+                onClick={() => {
+                  handleInput("interestFocus", option);
+                  getGeminiSuggestions(); // Trigger Gemini here
+                }}
+                className="btn btn-outline-secondary"
+              >
                 {option}
               </button>
             ))}
@@ -115,22 +119,23 @@ function FutureCareer() {
           <p>What type of work are you interested in?</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
             {[
-              "Technical", "Hands-on", "Creative", "People-oriented",
-              "Business", "Medical", "Analytical", "Artistic", "Social work"
+              "Technical",
+              "Hands-on",
+              "Creative",
+              "People-oriented",
+              "Business",
+              "Medical",
+              "Analytical",
+              "Artistic",
+              "Social work"
             ].map((option) => (
               <button
                 key={option}
                 onClick={() => {
                   setAnswers((prev) => ({ ...prev, interestArea: option }));
-                  setStep(3); // go to structured Qs next
+                  setStep(3); // ➡️ continue to follow-up questions
                 }}
-                style={{
-                  padding: "0.5rem 1rem",
-                  borderRadius: "6px",
-                  border: answers.interestArea === option ? "2px solid black" : "1px solid gray",
-                  backgroundColor: answers.interestArea === option ? "#e0e0e0" : "#fff",
-                  cursor: "pointer",
-                }}
+                className="btn btn-outline-secondary"
               >
                 {option}
               </button>
@@ -168,7 +173,7 @@ function FutureCareer() {
             placeholder="Type your own career..."
           />
 
-          <button onClick={handleConfirm} style={{ marginTop: "1rem" }}>
+          <button type="button" onClick={handleConfirm} className="btn btn-success" style={{ marginTop: "1rem" }}>
             Continue
           </button>
         </>
