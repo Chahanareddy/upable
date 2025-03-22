@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import './FutureCareer.css';
 import axios from "axios";
+
 
 function FutureCareer() {
   const navigate = useNavigate();
   const location = useLocation();
   const { job } = location.state || {};
+
 
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({});
