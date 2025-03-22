@@ -68,3 +68,19 @@ html, body, #root {
   .btn:hover {
     background-color: #c5a41f;
   }
+
+/* Radio */
+  /* Ensure the FormLabel text is white */
+.MuiFormLabel-root {
+  color: #ffffff !important;
+}
+
+/* Radio circles are white */
+.MuiRadio-root {
+  color: #ffffff !important; 
+}
+
+/* Checked state of the Radio*/
+.Mui-checked {
+  color: #e5bf26 !important; /* Accent color for the checked state */
+}
