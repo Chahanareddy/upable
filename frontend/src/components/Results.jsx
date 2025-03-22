@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import "./Results.css"; // 💡 Make sure this file exists!
 
 function Results() {
   const location = useLocation();
@@ -11,30 +12,35 @@ function Results() {
   useEffect(() => {
     if (job && career) {
       axios
-        .post("http://localhost:5000/get-upskilling", { job, career })
+        .post("http://localhost:5000/get-upskilling", {job, career })
         .then((res) => {
           setResources(res.data.resources);
           setLoading(false);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
     }
   }, [job, career]);
 
   return (
-    <div className="container">
-      <h2>Recommended Certifications for {career}</h2>
+    <div className="results-container">
+      <h2>📚 Recommended Certifications for <em>{career}</em></h2>
+
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <ul>
+        <div className="card-grid">
           {resources.map((resource, index) => (
-            <li key={index}>
+            <div className="resource-card" key={index}>
+              <h4>{resource.name}</h4>
               <a href={resource.link} target="_blank" rel="noopener noreferrer">
-                {resource.name}
+                Visit Course →
               </a>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
