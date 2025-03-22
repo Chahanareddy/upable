@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import './FutureCareer.css';
 import axios from "axios";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 function FutureCareer() {
   const navigate = useNavigate();
@@ -141,6 +146,20 @@ function FutureCareer() {
               </button>
             ))}
           </div>
+          <button
+            className="btn btn-primary"
+            onClick={() => setStep(7)}
+            disabled={!answers.interestArea}
+          >
+            Next
+          </button>
+        </>
+      )}
+
+      {[6].includes(step - 1) && step !== 99 && (
+        <button type="button" className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={getGeminiSuggestions}>
+          Get Career Suggestions
+        </button>
         </>
       )}
 
@@ -148,32 +167,29 @@ function FutureCareer() {
 
       {step === 99 && (
         <>
-          <p><strong>Here are some career paths you might like:</strong></p>
-          <ul>
-            {suggestions.map((s, i) => (
-              <li key={i}>
-                <label>
-                  <input
-                    type="radio"
-                    name="career"
-                    value={s}
-                    checked={selectedCareer === s}
-                    onChange={() => setSelectedCareer(s)}
-                  />{" "}
-                  {s}
-                </label>
-              </li>
-            ))}
-          </ul>
+          <FormControl component="fieldset">
+            <FormLabel component="legend"><strong>Here are some career paths you might like:</strong></FormLabel>
+            <RadioGroup
+              aria-label="career"
+              name="career"
+              value={selectedCareer}
+              onChange={(e) => setSelectedCareer(e.target.value)}
+            >
+              {suggestions.map((s, i) => (
+                <FormControlLabel key={i} value={s} control={<Radio />} label={s} />
+              ))}
+            </RadioGroup>
+          </FormControl>
 
           <p>Or type your own career path:</p>
           <input
             value={finalCareer}
             onChange={(e) => setFinalCareer(e.target.value)}
             placeholder="Type your own career..."
+            style={{ width: "100%", maxWidth: "400px", padding: "12px", marginBottom: "20px" }}
           />
 
-          <button type="button" onClick={handleConfirm} className="btn btn-success" style={{ marginTop: "1rem" }}>
+          <button type="button" className="btn btn-primary" onClick={handleConfirm} style={{ marginTop: "1rem" }}>
             Continue
           </button>
         </>
