@@ -41,7 +41,6 @@ html, body, #root {
     margin-bottom: 20px; /* Space below the input */
   }
   
-
   input::placeholder {
     color: #a9a9a9; /* Light gray for placeholder text */
   }
@@ -52,37 +51,36 @@ html, body, #root {
     box-shadow: 0 0 8px rgba(233, 69, 96, 0.5); /* Glow effect */
   }
 
-  button{
+  .btn{
     background-color: #e5bf26;
-    color: white;
+    color: #0f3460;
     padding: 14px 24px;
     border: none;
+    font-family: Arial, Helvetica, sans-serif;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 150px;
     margin: 5px;
   }
   
-  button:hover {
+  .btn:hover {
     background-color: #c5a41f;
   }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  
-  label {
-    display: flex;
-    align-items: center;
-  }
-  
-  input[type="radio"] {
-    margin-right: 10px;
-  }
+/* Radio */
+  /* Ensure the FormLabel text is white */
+.MuiFormLabel-root {
+  color: #ffffff !important;
+}
+
+/* Radio circles are white */
+.MuiRadio-root {
+  color: #ffffff !important; 
+}
+
+/* Checked state of the Radio*/
+.Mui-checked {
+  color: #e5bf26 !important; /* Accent color for the checked state */
+}
