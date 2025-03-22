@@ -106,16 +106,46 @@ function FutureCareer() {
         </>
       )}
 
-      {step === 6 && (
-        <>
-          <p>What type of work are you interested in?</p>
-          <input
-            type="text"
-            onBlur={(e) => handleInput("interestArea", e.target.value)}
-            placeholder="e.g. technical, creative, hands-on"
-          />
-        </>
-      )}
+{step === 6 && (
+  <>
+    <p>What type of work are you interested in?</p>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
+      {[
+        "Technical",
+        "Hands-on",
+        "Creative",
+        "People-oriented",
+        "Outdoor",
+        "Business",
+        "Medical",
+        "Analytical",
+        "Artistic",
+        "Social work"
+      ].map((option) => (
+        <button
+          key={option}
+          onClick={() => setAnswers((prev) => ({ ...prev, interestArea: option }))}
+          style={{
+            padding: "0.5rem 1rem",
+            borderRadius: "6px",
+            border: answers.interestArea === option ? "2px solid black" : "1px solid gray",
+            backgroundColor: answers.interestArea === option ? "#e0e0e0" : "#fff",
+            cursor: "pointer",
+          }}
+        >
+          {option}
+        </button>
+      ))}
+    </div>
+    <button
+      onClick={() => setStep(7)}
+      disabled={!answers.interestArea}
+    >
+      Next
+    </button>
+  </>
+)}
+
 
       {[5, 6].includes(step - 1) && step !== 99 && (
         <button style={{ marginTop: "1rem" }} onClick={getGeminiSuggestions}>
