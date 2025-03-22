@@ -79,18 +79,12 @@ function FutureCareer() {
     <div style={{ display: "flex", gap: "1rem" }}>
       {["Teams", "Alone"].map((option) => (
         <button
+          className="btn btn-primary"
           key={option}
           onClick={() => handleInput("teamStyle", option)}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: "1px solid gray",
-            backgroundColor: "#fff",
-            cursor: "pointer",
-          }}
         >
           {option}
-        </button>
+        </button> 
       ))}
     </div>
   </>
@@ -102,15 +96,9 @@ function FutureCareer() {
     <div style={{ display: "flex", gap: "1rem" }}>
       {["Remote", "Hybrid", "On-site"].map((option) => (
         <button
+          className="btn btn-primary"
           key={option}
           onClick={() => handleInput("workType", option)}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: "1px solid gray",
-            backgroundColor: "#fff",
-            cursor: "pointer",
-          }}
         >
           {option}
         </button>
@@ -126,15 +114,9 @@ function FutureCareer() {
     <div style={{ display: "flex", gap: "1rem" }}>
       {["Building", "Solving problems"].map((option) => (
         <button
+          className="btn btn-primary"
           key={option}
           onClick={() => handleInput("interestFocus", option)}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: "1px solid gray",
-            backgroundColor: "#fff",
-            cursor: "pointer",
-          }}
         >
           {option}
         </button>
@@ -160,21 +142,16 @@ function FutureCareer() {
         "Social work"
       ].map((option) => (
         <button
+          className="btn btn-primary"
           key={option}
           onClick={() => setAnswers((prev) => ({ ...prev, interestArea: option }))}
-          style={{
-            padding: "0.5rem 1rem",
-            borderRadius: "6px",
-            border: answers.interestArea === option ? "2px solid black" : "1px solid gray",
-            backgroundColor: answers.interestArea === option ? "#e0e0e0" : "#fff",
-            cursor: "pointer",
-          }}
         >
           {option}
         </button>
       ))}
     </div>
     <button
+      className="btn btn-primary"
       onClick={() => setStep(7)}
       disabled={!answers.interestArea}
     >
@@ -219,7 +196,7 @@ function FutureCareer() {
             placeholder="Type your own career..."
           />
 
-          <button type="button" onClick={handleConfirm} style={{ marginTop: "1rem" }}>
+          <button type="button" className="btn btn-primary" onClick={handleConfirm} style={{ marginTop: "1rem" }}>
             Continue
           </button>
         </>
