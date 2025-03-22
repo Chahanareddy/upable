@@ -1,78 +1,109 @@
-// frontend/src/components/UserInfo.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './UserInfo.css'; // Import a CSS file for styling
 
 function UserInfo() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [city, setCity] = useState("");
-  const [disability, setDisability] = useState("");
-  const [job, setJob] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    country: "",
+    disability: "",
+    job: "",
+  });
+
   const navigate = useNavigate();
-  
-  //Writing every country w the law for now- will find a way to not hardcode it like this later
-  const countrieswlaw = [
+
+  const countriesWithLaw = [
     "Germany", "France", "Italy", "Japan", "South Korea", "India",
-    "Brazil", "China", "Turkey", "Thailand", "Other"
+    "Brazil", "Turkey", "Thailand", "Other"
   ];
-  
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleNext = () => {
-    if (job.trim() !== "") {
-      navigate("/future-career", {
-        state: { name, age, city, disability, job },
-      });
+    if (formData.job.trim()) {
+      navigate("/future-career", { state: formData });
+    } else {
+      alert("Please enter your job title before proceeding.");
     }
   };
 
   return (
-    <div className="container">
-      <h2>Let's get to know you!</h2>
+    <div className="full-screen-container">
+      <div className="user-info-wrapper">
+        <h2 className="section-title">Let's get to know you</h2>
 
-      <label>Name:</label>
-      <input
-        type="text"
-        placeholder="Enter your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+        <form className="user-info-form">
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">Name:</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              className="form-input"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <label>Age:</label>
-      <input
-        type="number"
-        placeholder="Enter your age"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-      />
+          <div className="form-group">
+            <label htmlFor="age" className="form-label">Age:</label>
+            <input
+              id="age"
+              type="number"
+              name="age"
+              placeholder="Enter your age"
+              className="form-input"
+              value={formData.age}
+              onChange={handleChange}
+            />
+          </div>
 
-      
+          <div className="form-group">
+            <label htmlFor="country" className="form-label">Country:</label>
+            <select id="country" name="country" value={formData.country} onChange={handleChange} className="form-select">
+              <option value="">Select a country</option>
+              {countriesWithLaw.map((country, index) => (
+                <option key={index} value={country}>{country}</option>
+              ))}
+            </select>
+          </div>
 
-<label>Country:</label>
-<select value={city} onChange={(e) => setCountry(e.target.value)}>
-  <option value="">Select a country</option>
-  {countrieswlaw.map((c, i) => (
-    <option key={i} value={c}>{c}</option>
-  ))}
-</select>
+          <div className="form-group">
+            <label htmlFor="disability" className="form-label">Disability (optional):</label>
+            <input
+              id="disability"
+              type="text"
+              name="disability"
+              placeholder="e.g. Vision impairment, mobility issues"
+              className="form-input"
+              value={formData.disability}
+              onChange={handleChange}
+            />
+          </div>
 
+          <div className="form-group">
+            <label htmlFor="job" className="form-label">Current Job:</label>
+            <input
+              id="job"
+              type="text"
+              name="job"
+              placeholder="Enter your job title"
+              className="form-input"
+              value={formData.job}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <label>Disability (optional):</label>
-      <input
-        type="text"
-        placeholder="e.g. Vision impairment, mobility issues"
-        value={disability}
-        onChange={(e) => setDisability(e.target.value)}
-      />
-
-      <label>What is your current job?</label>
-      <input
-        type="text"
-        placeholder="Enter your job title"
-        value={job}
-        onChange={(e) => setJob(e.target.value)}
-      />
-
-      <button onClick={handleNext}>Next</button>
+          <button type="button" className="btn btn-primary" onClick={handleNext}>Next</button>
+        </form>
+      </div>
     </div>
   );
 }
