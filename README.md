@@ -18,7 +18,7 @@ UpAble is a web application designed to help users with disabilities explore fut
   - React.js
   - React Router for navigation
   - Material-UI (MUI) for UI components
-  - CSS for styling
+  - HTML/CSS for formatting and styling
 - **Backend**:
   - Node.js
   - Express.js
