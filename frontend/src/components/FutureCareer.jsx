@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import './FutureCareer.css';
 import axios from "axios";
+import SuccessStoriesButton from "./SuccessStoriesButton";
 
 function FutureCareer() {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ function FutureCareer() {
 
   return (
     <div className="container" style={{ padding: "2rem" }}>
+        
       <h2>Explore Your Future Career</h2>
 
       {step === 1 && (

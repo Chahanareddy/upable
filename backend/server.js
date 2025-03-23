@@ -17,7 +17,7 @@ app.post("/gemini-career-chat", async (req, res) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-    // Only create the chat session ONCE
+    // Only create the chat session ONCE because if not it's refreshing
     if (!sharedChat) {
       sharedChat = model.startChat({
         history: messages.map((msg) => ({
@@ -51,7 +51,7 @@ I am currently working as a ${job}. The user shared these preferences:
 ${Object.entries(answers).map(([q, a]) => `${q}: ${a}`).join("\n")}
 
 Please suggest 5 specific career paths that fit these preferences. 
-Return only a plain list (one per line), no explanation or numbering.
+Return only a plain list (one per line), 1 sentence explanation their role; super precise 10 words.
 `;
 
     const result = await model.generateContent(prompt);
@@ -66,62 +66,57 @@ Return only a plain list (one per line), no explanation or numbering.
 
 app.post("/get-upskilling", async (req, res) => {
   const { job, career, disability } = req.body;
-
-  console.log("🔍 Received:", { job, career, disability }); // ✅ Helpful debug
+  console.log("🔍 Received:", { job, career, disability });
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-    const adjustedDisability =
-  disability && disability.toLowerCase() !== "undefined"
-    ? disability
-    : "a specific disability";
+    const adjustedDisability = disability && disability.toLowerCase() !== "undefined"
+      ? disability
+      : "a specific disability";
 
-
-const prompt = `
+    const prompt = `
 You are helping someone with career upskilling. They currently work as a ${job}, but want to become a ${career}.
-They have ${adjustedDisability} — so your plan must be tailored for someone with this. Mention the disability in your response, and clearly explain how each course helps someone with it.
+They have ${adjustedDisability}. Give a clear upskilling roadmap.
 
-Give a reasonable timeframe for that disability and career so spread the learning phases accordingly. DO NOT CHANGE THIS NUMBER, ur timeline MUST be basedon this number.
+Start with 2 sentences describing who the plan is for and why the approach fits them (mention 1 more sentence why this is a good plan for dyslexic people).
 
-Give:
-- A clear upskilling roadmap with **5 structured phases**
-- In each phase, suggest **3 specific courses or learning resources**
-- Include platform links (Coursera, Udemy, LinkedIn Learning) if possible
-- For each phase, explain how it supports someone with ${adjustedDisability}
-- Use bullet points or numbered structure for clarity
-- End with: “By the end of this plan, you should be able to…”
+Then, provide 5 phases using this format exactly:
+**Phase 1: Title (time)**
+• Course Name – [link] (short description why its useful for dyslexic ppl) *3 per phase
 
-also follow this format
-**Phase 1: Title (# year)**  
-• Course 1 – [link]  
-• Course 2 – [link]  
-• Course 3 – [link]
-
-**Phase 2: ...**
-
-
-Keep it concise, encouraging, and actionable.
+Only return the initial description + 5 formatted phases. No intro/outro sentences.
 `;
-
 
     const result = await model.generateContent(prompt);
     const text = result.response.text();
 
-    const resources = text
-      .split("\n")
-      .filter(Boolean)
-      .map((line) => ({
-        name: line,
-        link: "#", // You can extract real links if needed later
-      }));
+    const descriptionMatch = text.match(/^(.*?\*\*Phase 1:)/s);
+    const description = descriptionMatch ? descriptionMatch[1].replace(/\*\*Phase 1:/, "").trim() : "";
+    const rest = text.replace(descriptionMatch[1], "**Phase 1:");
 
-    res.json({ resources });
-  } catch (error) {
-    console.error("❌ Gemini API Error:", error.message);
+    const phaseChunks = rest.split("**Phase ").slice(1);
+    const phases = phaseChunks.map((chunk) => {
+      const [titleLine, ...courseLines] = chunk.split("\n").filter(Boolean);
+      const title = `Phase ${titleLine.trim()}`;
+      const courses = courseLines.map(line => {
+        const match = line.match(/• (.*?) – \[(.*?)\]/);
+        return {
+          name: match ? match[1] : line,
+          link: match ? match[2] : "#"
+        };
+      });
+      return { title, courses };
+    });
+
+    res.json({ description, phases });
+  } catch (err) {
+    console.error("❌ Gemini API Error:", err.message);
     res.status(500).json({ error: "Failed to fetch upskilling recommendations." });
   }
 });
+
+
 
 
 let quickChatSession = null; // ✅ store chat globally

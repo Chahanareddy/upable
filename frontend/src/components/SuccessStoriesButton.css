@@ -1,0 +1,20 @@
+.success-stories-fixed-btn {
+    position: fixed;
+    top: 0px;
+    right: 20px;
+    z-index: 9999;
+    padding: 10px 20px;
+    background-color: #e5bf26;
+    color: #0f0f1d;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(229, 191, 38, 0.5);
+    transition: transform 0.2s ease;
+  }
+  
+  .success-stories-fixed-btn:hover {
+    transform: scale(1.05);
+  }
+  

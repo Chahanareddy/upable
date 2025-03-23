@@ -1,58 +1,124 @@
+/* Container */
 .results-container {
     padding: 2rem;
-    background-color: #1a1a2e;
-    color: #ffffff;
+    background-color: #16162a;
+    color: #fff;
     min-height: 100vh;
+    position: relative;
   }
   
+  /* Title */
+  .results-container h2 {
+    color: #f1c40f;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Description Box */
+  .roadmap-description {
+    background-color: #10101d;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  /* Phase Title */
   .phase-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    color: #f1c40f;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    color: #e5bf26;
+    font-weight: 600;
   }
   
-  .card-grid {
+  /* Cards under each phase */
+  .phase-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
   }
   
+  /* Individual course card */
   .resource-card {
-    background: #1a1d3a;
+    background-color: #1f1f33;
     padding: 1rem;
     border-radius: 8px;
-    width: calc(33.33% - 1rem);
-    min-width: 240px;
-    border: 1px solid #2e2e3e;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+    flex: 1 1 30%;
+    min-width: 250px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   .resource-card h4 {
+    font-size: 1rem;
     margin-bottom: 0.5rem;
     color: #ffffff;
   }
   
   .resource-card a {
-    color: #e5bf26;
+    color: #f1c40f;
     text-decoration: none;
-    font-weight: bold;
-  }
-  .success-button {
-    background-color: #e5bf26;
-    color: #1a1a2e;
-    border: none;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    margin-top: 1rem;
   }
   
-  .success-button:hover {
-    background-color: #d1a919;
-    transform: translateY(-2px);
+  .resource-card a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Phase Navigation */
+  .phase-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .phase-navigation button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+  }
+  
+  .phase-navigation .next-btn {
+    background-color: #f1c40f;
+    color: #16162a;
+  }
+  
+  .phase-navigation .done-btn {
+    background-color: #2ecc71;
+    color: white;
+  }
+  
+  /* Top right Success Stories button */
+  .success-stories-topright {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .success-stories-topright .btn {
+    background-color: #f1c40f;
+    color: #16162a;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .success-stories-topright .btn:hover {
+    background-color: #ddb500;
   }
   

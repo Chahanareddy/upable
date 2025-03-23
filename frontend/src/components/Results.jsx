@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Results.css"; // ✅ Make sure this CSS file exists!
+import "./Results.css";
+import SuccessStoriesButton from "./SuccessStoriesButton";
+
 
 function Results() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { job, career, disability, timeframe } = location.state || {};
+  const { job, career, disability } = location.state || {};
 
-  const [resources, setResources] = useState([]);
+  const [phases, setPhases] = useState([]);
+  const [description, setDescription] = useState("");
+  const [currentPhase, setCurrentPhase] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [done, setDone] = useState([]);
 
   useEffect(() => {
     if (job && career) {
       axios
-        .post("http://localhost:5000/get-upskilling", {
-          job,
-          career,
-          disability,
-          timeframe,
-        })
+        .post("http://localhost:5000/get-upskilling", { job, career, disability })
         .then((res) => {
-          setResources(res.data.resources);
+          setDescription(res.data.description);
+          setPhases(res.data.phases);
           setLoading(false);
         })
         .catch((err) => {
@@ -29,35 +30,60 @@ function Results() {
           setLoading(false);
         });
     }
-  }, [job, career, disability, timeframe]);
+  }, [job, career, disability]);
+
+  const handleNext = () => {
+    if (currentPhase < phases.length - 1) {
+      setCurrentPhase(currentPhase + 1);
+    }
+  };
+
+  const handleMarkDone = () => {
+    setDone((prev) => [...prev, currentPhase]);
+  };
 
   return (
+    
     <div className="results-container">
-      <h2>📚 Recommended Roadmap for <em>{career}</em></h2>
-
+    <SuccessStoriesButton />
+      <h2>📚 Roadmap to <em>{career}</em></h2>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="card-grid">
-          {resources.map((resource, index) => (
-            <div className="resource-card" key={index}>
-              <h4>{resource.name}</h4>
-              <a href={resource.link} target="_blank" rel="noopener noreferrer">
-                Visit Course →
-              </a>
+        <>
+          {currentPhase === 0 && (
+            <div className="description-card">
+              <p>{description}</p>
+              <button className="btn btn-primary" onClick={handleNext}>Start Phase 1</button>
             </div>
-          ))}
-        </div>
+          )}
+
+          {currentPhase > 0 && (
+            <div className="phase-section">
+              <h3>{phases[currentPhase - 1].title}</h3>
+              <div className="card-grid">
+                {phases[currentPhase - 1].courses.map((course, idx) => (
+                  <div className="resource-card" key={idx}>
+                    <p>{course.name}</p>
+                    <a href={course.link} target="_blank" rel="noopener noreferrer">
+                      Visit Course →
+                    </a>
+                  </div>
+                ))}
+              </div>
+              {!done.includes(currentPhase) ? (
+                <button className="btn btn-success" onClick={handleMarkDone}>Mark as Done</button>
+              ) : (
+                <button className="btn btn-secondary" onClick={handleNext}>
+                  {currentPhase === phases.length ? "Finish" : "Next Phase →"}
+                </button>
+              )}
+            </div>
+          )}
+        </>
       )}
-
-<button
-  onClick={() => navigate("/success-stories")}
-  className="success-button"
->
-  View Success Stories
-</button>
-
     </div>
+    
   );
 }
 

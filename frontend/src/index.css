@@ -8,8 +8,3 @@ body {
   -ms-overflow-style: none;    /* IE/Edge */
   overflow-y: scroll;          /* Keep height without visible scrollbar */
 }
-
-@font-face{
-  font-family: dyslexic;
-  src:url(/dyslexic-Regular.ttf);
-}
