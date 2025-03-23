@@ -1,4 +1,4 @@
-/* Container */
+
 .results-container {
     padding: 2rem;
     background-color: #16162a;
@@ -24,7 +24,7 @@
     line-height: 1.6;
   }
   
-  /* Phase Title */
+  /* Phase number/description ig */
   .phase-title {
     font-size: 1.5rem;
     color: #f1c40f;
@@ -41,7 +41,7 @@
     margin-bottom: 2rem;
   }
   
-  /* Individual course card */
+  /* Each course card */
   .resource-card {
     background-color: #1f1f33;
     padding: 1rem;
@@ -71,7 +71,7 @@
     text-decoration: underline;
   }
   
-  /* Phase Navigation */
+  /* Phase moving???? */
   .phase-navigation {
     display: flex;
     justify-content: center;
@@ -99,7 +99,7 @@
     color: white;
   }
   
-  /* Top right Success Stories button */
+  /* Top right Success Stories button on every page?? */
   .success-stories-topright {
     position: absolute;
     top: 1rem;

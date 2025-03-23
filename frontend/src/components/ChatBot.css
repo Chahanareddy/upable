@@ -36,7 +36,7 @@
     color: #e5bf26;
   }
   
-  /* Input field */
+  /* Input area */
   input[type="text"] {
     width: 100%;
     padding: 12px;
@@ -48,7 +48,7 @@
     margin-top: 1rem;
   }
   
-  /* Send + Continue buttons */
+  /* Send and Continue buttons */
   button {
     background-color: #e5bf26;
     color: #000;

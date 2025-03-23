@@ -38,17 +38,17 @@ html, body, #root {
     background-color: #1a1a2e; 
     color: #ffffff;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px; /* Space below the input */
+    margin-bottom: 20px; /* This i added for space below the input */
   }
   
   input::placeholder {
-    color: #a9a9a9; /* Light gray for placeholder text */
+    color: #a9a9a9; /* Light gray for placeholder text bc white is too like bright idk*/
   }
   
   input:focus {
     outline: none;
     border-color: #e5bf26;
-    box-shadow: 0 0 8px rgba(233, 69, 96, 0.5); /* Glow effect */
+    box-shadow: 0 0 8px rgba(233, 69, 96, 0.5); /* Glow effect for fun lol */
   }
 
   .btn{
@@ -70,7 +70,6 @@ html, body, #root {
   }
 
 /* Radio */
-  /* Ensure the FormLabel text is white */
 .MuiFormLabel-root {
   color: #ffffff !important;
 }
@@ -82,7 +81,7 @@ html, body, #root {
 
 /* Checked state of the Radio*/
 .Mui-checked {
-  color: #e5bf26 !important; /* Accent color for the checked state */
+  color: #e5bf26 !important; /* Accent color ig*/
 }
 
 .career-options {

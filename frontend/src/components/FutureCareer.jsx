@@ -7,9 +7,9 @@ import SuccessStoriesButton from "./SuccessStoriesButton";
 function FutureCareer() {
 
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //for navigating to diff pages
   const location = useLocation();
-  const { job } = location.state || {};
+  const { job } = location.state || {}; //sends this "answer key" ig for the page to use
 
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({});
@@ -17,9 +17,10 @@ function FutureCareer() {
   const [selectedCareer, setSelectedCareer] = useState("");
   const [finalCareer, setFinalCareer] = useState("");
   const [loading, setLoading] = useState(false);
-  const { disability } = location.state || {};
+  const { disability } = location.state || {}; //another answer key for fonts
 
-  const isDyslexic = disability?.toLowerCase().includes("dyslex");
+  //bascially if the word dyslex is in user's input from userinfo page, the web changes to align for dyslexic ppl
+  const isDyslexic = disability?.toLowerCase().includes("dyslex"); 
 
   const handleYes = () => setStep(2);
   const handleNo = () => setStep(6);
@@ -51,8 +52,10 @@ function FutureCareer() {
     });
   };
 
+  //dyslexic font resumes if needed
+  //A lot of the questions are here for generrrating specialized responeses when you get ur 5 suggested career pths
   return (
-    <div className={isDyslexic ? "dyslexic-font" : ""}>
+    <div className={isDyslexic ? "dyslexic-font" : ""}> 
     <div className="container" style={{ padding: "2rem" }}>
         
       <h2>Explore Your Future Career</h2>
@@ -125,7 +128,7 @@ function FutureCareer() {
                 key={option}
                 onClick={() => {
                   handleInput("interestFocus", option);
-                  getGeminiSuggestions(); // Trigger Gemini here
+                  getGeminiSuggestions(); // Trigger Gemini here to give siggestions
                 }}
                 className="btn btn-outline-secondary"
               >
@@ -141,6 +144,7 @@ function FutureCareer() {
           <p>What type of work are you interested in?</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1rem" }}>
             {[
+                //list of diff disciplinaries of like jobs ig
               "Technical",
               "Hands-on",
               "Creative",
@@ -155,7 +159,7 @@ function FutureCareer() {
                 key={option}
                 onClick={() => {
                   setAnswers((prev) => ({ ...prev, interestArea: option }));
-                  setStep(3); // ➡️ continue to follow-up questions
+                  setStep(3); // ➡️ continue to ask folow-up questns
                 }}
                 className="btn btn-outline-secondary"
               >
@@ -168,7 +172,8 @@ function FutureCareer() {
 
       {loading && <p>Thinking...</p>}
 
-      {step === 99 && (
+
+      {step === 99 && ( //thsi is where ai suggests like 5 paths you can go into and u can pick one
   <div className="suggestion-step">
     <p><strong>Here are some career paths you might like:</strong></p>
     <div className="career-options">
@@ -187,15 +192,17 @@ function FutureCareer() {
       ))}
     </div>
 
-    <p style={{ marginTop: "2rem" }}>Or type your own career path:</p>
-    <input
+
+    <p style={{ marginTop: "2rem" }}>Or type your own career path:</p> 
+    <input //if u dont like the suggested ones u can pick ur own lol
       value={finalCareer}
       onChange={(e) => setFinalCareer(e.target.value)}
       placeholder="Type your own career..."
       className="form-input"
     />
 
-    <button
+
+    <button  //button to continue to next page
       type="button"
       onClick={handleConfirm}
       className="btn btn-primary"

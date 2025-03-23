@@ -1,11 +1,11 @@
-/* Full-screen container and base styles */
+
 body, html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
     background-color: #1a1a2e;
     color: #fff;
-    overflow-x: hidden; /* Prevent side scroll */
+    overflow-x: hidden; /* Prevents side scroll bc rn its overflowing */
   }
   
   /* Hide scrollbar */
@@ -13,8 +13,8 @@ body, html {
     display: none;
   }
   body {
-    -ms-overflow-style: none;  /* IE/Edge */
-    scrollbar-width: none;     /* Firefox */
+    -ms-overflow-style: none;  /* Forgot why i put this?? */
+    scrollbar-width: none;     /* and this?? */
   }
   
   /* Main container */
@@ -24,7 +24,7 @@ body, html {
     margin: 0 auto;
   }
   
-  /* Title styling */
+  /* Title */
   .section-title {
     font-size: 2rem;
     color: #f6c90e;
@@ -46,7 +46,7 @@ body, html {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   }
   
-  /* Profile image */
+  /* fake pfps lol */
   .profile-img {
     width: 80px;
     height: 80px;
@@ -55,7 +55,7 @@ body, html {
     object-fit: cover;
   }
   
-  /* Content beside image */
+  /* Content beside pfp */
   .story-content h4 {
     margin: 0 0 0.3rem 0;
     color: #f6c90e;
@@ -73,7 +73,7 @@ body, html {
     margin-bottom: 0.5rem;
   }
   
-  /* Link styling */
+  /* Linkedin links */
   .story-content a {
     color: #f6c90e;
     text-decoration: none;

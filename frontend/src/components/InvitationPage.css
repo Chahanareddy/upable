@@ -11,12 +11,20 @@
     padding: 20px;
   }
   
-  /* Title styling */
+  .upable-logo {
+    position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px; /* change logo size if u want might be too big */
+  height: auto;
+  }
+  
+  /* Title */
   h1 {
     font-size: 32px;
     color: #e5bf26; 
     margin-bottom: 20px;
-    font-family: Arial, sans-serif; /* Default font */
+    font-family: Arial, sans-serif;
   }
   
 
@@ -29,19 +37,11 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px; /* Spacing between buttons */
-    font-family: Arial, sans-serif; /* Default font */
+    margin-top: 10px; /* Space between buttons */
+    font-family: Arial, sans-serif;
   }
   
   .btn:hover {
     background-color: #c5a41f; 
-  }
-
-  .upable-logo {
-    position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 100px; /* adjust size */
-  height: auto;
   }
   

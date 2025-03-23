@@ -10,8 +10,10 @@ function ChatBot() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { job, career, disability } = location.state || {};
-  const isDyslexic = disability?.toLowerCase().includes("dyslex");
+  const { job, career, disability } = location.state || {}; //the answer keys for this page to remember
+
+  //if the user's input in the first userinfo page have the word dyslex in it then the website considers it as dyslexia and changes the web to support them
+  const isDyslexic = disability?.toLowerCase().includes("dyslex"); 
 
   
   const handleSend = async () => {
@@ -25,7 +27,7 @@ function ChatBot() {
     try {
         const res = await axios.post("http://localhost:5000/gemini-quick-chat", {
             messages: newMessages,
-            career, // ✅ Send this!
+            career, //Send this
           });
           
 
@@ -37,8 +39,10 @@ function ChatBot() {
     }
   };
 
+  //Changes fonts of the words to dyslexic font if like the keyword is found
+  //A lot of html is also here
   return (
-    <div className={isDyslexic ? "dyslexic-font" : ""}>
+    <div className={isDyslexic ? "dyslexic-font" : ""}> 
     <div className="container" style={{ padding: "2rem" }}>
     <SuccessStoriesButton />
     
@@ -64,7 +68,7 @@ function ChatBot() {
 
       <button
         onClick={() => navigate("/results", { state: { job, career, disability } })}
-        style={{ marginTop: "2rem" }}
+        style={{ marginTop: "2rem" }} //moves to the results page when u click
       >
         Continue to Results →
       </button>

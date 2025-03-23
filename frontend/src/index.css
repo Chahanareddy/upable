@@ -1,15 +1,15 @@
-/* Hide vertical scrollbar across all pages */
+/* hide vertical scrollbar on all pages */
 ::-webkit-scrollbar {
   display: none;
 }
 
 body {
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE/Edge */
-  overflow-y: scroll;          /* Keep height without visible scrollbar */
+  scrollbar-width: none;       /* dont rmbr why i put this */
+  -ms-overflow-style: none;    /* same */
+  overflow-y: scroll;          /* keep height without visible scrollbar */
 }
 
-
+/*not sure if i should put this here or App.css so put it in both lol*/
 @font-face {
   font-family: 'OpenDyslexic';
   src: url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/otf/OpenDyslexic-Regular.otf') format('opentype');

@@ -5,7 +5,8 @@ function InvitationPage() {
 
   return (
 
-    
+
+    //i just made a css file move this to there
     <div
       style={{
         display: "flex",
@@ -22,15 +23,15 @@ function InvitationPage() {
     >
         <img
   src="/logo.png"
-  alt="Upable Logo"
+  alt="Upable Logo" //our logo that sammi designed!!
   className="upable-logo"
 />
-      <h1 style={{ fontSize: "32px", color: "#e5bf26", marginBottom: "20px" }}>
+      <h1 style={{ fontSize: "32px", color: "#e5bf26", marginBottom: "20px" }}> 
 
       
         Welcome to the Upskilling App
       </h1>
-      <button
+      <button //yo there's sm css here move this to css foler too
         style={{
           backgroundColor: "#e5bf26", // Orange/yellow
           color: "white",
@@ -43,7 +44,7 @@ function InvitationPage() {
           marginTop: "20px",
         }}
         onMouseOver={(e) => (e.target.style.backgroundColor = "#c5a41f")} // Darker shade on hover
-        onMouseOut={(e) => (e.target.style.backgroundColor = "#e5bf26")} // Revert on mouse out
+        onMouseOut={(e) => (e.target.style.backgroundColor = "#e5bf26")} // Revert
         onClick={() => navigate("/user-info")}
       >
         Start

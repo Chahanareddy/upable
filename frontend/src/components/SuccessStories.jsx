@@ -1,5 +1,8 @@
+//this whole page is fake data but once we can put in an acc database we will have real data
+//for now, its hardcoded lol
+
 import './SuccessStories.css';
-import aylin from "./Linkedin-pics/aylin.jpg";
+import aylin from "./Linkedin-pics/aylin.jpg"; //random ppl on google (not real)
 import jasper from "./Linkedin-pics/jasper.jpg";
 import carlos from "./Linkedin-pics/carlos.jpg";
 import sara from "./Linkedin-pics/sara.jpg";
@@ -10,6 +13,7 @@ import mai from "./Linkedin-pics/mai.jpg";
 import ahmed from "./Linkedin-pics/ahmed.jpg";
 import emily from "./Linkedin-pics/emily.jpg";
 
+//format every person the same and use neurodivergent disorers and linkedin links go to acc random ppl
 const stories = [
   {
     name: "Aylin Kaya",
@@ -129,7 +133,7 @@ function SuccessStories() {
             <p><strong>To:</strong> {story.to}</p>
             <p className="desc">“{story.description}”</p>
             <a href={story.linkedin} target="_blank" rel="noopener noreferrer">
-              LinkedIn →
+              Connect and Chat! →
             </a>
           </div>
         </div>

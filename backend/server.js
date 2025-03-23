@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express"); 
 const cors = require("cors");
 require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 let sharedChat = null;
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); //api key hidden instead of hardcoded
 
 
 app.post("/gemini-career-chat", async (req, res) => {
@@ -18,6 +18,7 @@ app.post("/gemini-career-chat", async (req, res) => {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
     // Only create the chat session ONCE because if not it's refreshing
+
     if (!sharedChat) {
       sharedChat = model.startChat({
         history: messages.map((msg) => ({
@@ -27,7 +28,7 @@ app.post("/gemini-career-chat", async (req, res) => {
       });
     }
 
-    // Use only the latest user message
+    // Only like uses the latest user message
     const lastUserMessage = messages[messages.length - 1].text;
 
     const result = await sharedChat.sendMessage(lastUserMessage);
@@ -46,6 +47,8 @@ app.post("/gemini-career-structured", async (req, res) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
+    //prompt to suggest the 5 paths for users and u can like click on what u want
+
     const prompt = `
 I am currently working as a ${job}. The user shared these preferences:
 ${Object.entries(answers).map(([q, a]) => `${q}: ${a}`).join("\n")}
@@ -55,18 +58,23 @@ Return only a plain list (one per line), 1 sentence explanation their role; supe
 `;
 
     const result = await model.generateContent(prompt);
-    const lines = result.response.text().split("\n").filter((line) => line.trim());
 
+    //breaks the response by space and uses them as like something like different variables to list them
+    const lines = result.response.text().split("\n").filter((line) => line.trim()); 
+
+    //errors
     res.json({ suggestions: lines });
   } catch (err) {
-    console.error("Gemini Structured Error:", err.message);
+    console.error("Gemini Structured Error:", err.message); 
     res.status(500).json({ error: "Gemini failed to suggest careers." });
   }
 });
 
+//acc prompt for the results page that generates the phases/modules
+
 app.post("/get-upskilling", async (req, res) => {
   const { job, career, disability } = req.body;
-  console.log("🔍 Received:", { job, career, disability });
+  console.log("🔍 Received:", { job, career, disability }); //Tells you which of the "answer keys" were received in like ur terminal
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
@@ -91,10 +99,15 @@ Only return the initial description + 5 formatted phases. No intro/outro sentenc
     const result = await model.generateContent(prompt);
     const text = result.response.text();
 
+    //break it donw by line so we can format it prettier/css is easier
+
     const descriptionMatch = text.match(/^(.*?\*\*Phase 1:)/s);
     const description = descriptionMatch ? descriptionMatch[1].replace(/\*\*Phase 1:/, "").trim() : "";
     const rest = text.replace(descriptionMatch[1], "**Phase 1:");
 
+    
+    //basically breaks it down by lines and makes it like variable and use it to format
+    
     const phaseChunks = rest.split("**Phase ").slice(1);
     const phases = phaseChunks.map((chunk) => {
       const [titleLine, ...courseLines] = chunk.split("\n").filter(Boolean);
@@ -109,6 +122,7 @@ Only return the initial description + 5 formatted phases. No intro/outro sentenc
       return { title, courses };
     });
 
+    //errors if api doesnt work
     res.json({ description, phases });
   } catch (err) {
     console.error("❌ Gemini API Error:", err.message);
@@ -152,7 +166,7 @@ app.post("/gemini-quick-chat", async (req, res) => {
     const result = await quickChatSession.sendMessage(userMessage);
     let reply = result.response.text().trim();
 
-    // Force 1 sentence
+    // Forces 1 sentence
     reply = reply.split(".")[0] + ".";
 
     res.json({ reply });
@@ -163,5 +177,5 @@ app.post("/gemini-quick-chat", async (req, res) => {
 });
 
 
-
+//this is if the api is working properly
 app.listen(5000, () => console.log("✅ Server running on port 5000"));
