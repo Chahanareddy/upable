@@ -1,0 +1,86 @@
+/* Full-screen container and base styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a2e;
+    color: #fff;
+    overflow-x: hidden; /* Prevent side scroll */
+  }
+  
+  /* Hide scrollbar */
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+    -ms-overflow-style: none;  /* IE/Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  
+  /* Main container */
+  .success-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  /* Title styling */
+  .section-title {
+    font-size: 2rem;
+    color: #f6c90e;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  /* Each card */
+  .story-card {
+    display: flex;
+    gap: 1.5rem;
+    background-color: #1e1e38;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Profile image */
+  .profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #f6c90e;
+    object-fit: cover;
+  }
+  
+  /* Content beside image */
+  .story-content h4 {
+    margin: 0 0 0.3rem 0;
+    color: #f6c90e;
+    font-size: 1.1rem;
+  }
+  
+  .story-content p {
+    margin: 0.2rem 0;
+  }
+  
+  .story-content .desc {
+    font-style: italic;
+    color: #ccc;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Link styling */
+  .story-content a {
+    color: #f6c90e;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .story-content a:hover {
+    text-decoration: underline;
+  }
+  

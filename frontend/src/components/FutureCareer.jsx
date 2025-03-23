@@ -172,6 +172,7 @@ function FutureCareer() {
             onChange={(e) => setFinalCareer(e.target.value)}
             placeholder="Type your own career..."
           />
+          
 
           <button type="button" onClick={handleConfirm} className="btn btn-success" style={{ marginTop: "1rem" }}>
             Continue
@@ -179,7 +180,10 @@ function FutureCareer() {
         </>
       )}
     </div>
+    
   );
+
+  
 }
 
 export default FutureCareer;

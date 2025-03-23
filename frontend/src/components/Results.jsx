@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Results.css"; // 💡 Make sure this file exists!
+import "./Results.css"; // ✅ Make sure this CSS file exists!
 
 function Results() {
   const location = useLocation();
-  const { job, career } = location.state || {};
+  const navigate = useNavigate();
+  const { job, career, disability, timeframe } = location.state || {};
+
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (job && career) {
       axios
-        .post("http://localhost:5000/get-upskilling", {job, career })
+        .post("http://localhost:5000/get-upskilling", {
+          job,
+          career,
+          disability,
+          timeframe,
+        })
         .then((res) => {
           setResources(res.data.resources);
           setLoading(false);
@@ -22,11 +29,11 @@ function Results() {
           setLoading(false);
         });
     }
-  }, [job, career]);
+  }, [job, career, disability, timeframe]);
 
   return (
     <div className="results-container">
-      <h2>📚 Recommended Certifications for <em>{career}</em></h2>
+      <h2>📚 Recommended Roadmap for <em>{career}</em></h2>
 
       {loading ? (
         <p>Loading...</p>
@@ -42,6 +49,14 @@ function Results() {
           ))}
         </div>
       )}
+
+      <button
+        onClick={() => navigate("/success-stories")}
+        className="btn btn-secondary"
+        style={{ marginTop: "2rem" }}
+      >
+        View Success Stories
+      </button>
     </div>
   );
 }

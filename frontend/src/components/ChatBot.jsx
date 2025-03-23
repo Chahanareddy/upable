@@ -8,7 +8,7 @@ function ChatBot() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { job, career } = location.state || {};
+  const { job, career, disability } = location.state || {};
 
   
   const handleSend = async () => {
@@ -58,13 +58,13 @@ function ChatBot() {
       </button>
 
       <button
-        onClick={() => navigate("/results", { state: { job, career } })}
+        onClick={() => navigate("/results", { state: { job, career, disability } })}
         style={{ marginTop: "2rem" }}
       >
         Continue to Results →
       </button>
     </div>
-  );
+  );  
 }
 
 export default ChatBot;

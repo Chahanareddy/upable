@@ -67,28 +67,53 @@ Return only a plain list (one per line), no explanation or numbering.
 app.post("/get-upskilling", async (req, res) => {
   const { job, career, disability } = req.body;
 
+  console.log("🔍 Received:", { job, career, disability }); // ✅ Helpful debug
+
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-    const adjustedDisability = disability && disability !== "undefined" ? disability : "a specific disability";
+    const adjustedDisability =
+  disability && disability.toLowerCase() !== "undefined"
+    ? disability
+    : "a specific disability";
 
-    const prompt = `I currently work as a ${job}, but I want to become a ${career}. I have ${adjustedDisability} so tailor ur advice for someone with this( mention the disability in ur response and say why the provided courses are helpful for ppl with this disbility). Suggest certifications courses or learning resources (with links) from platforms like Coursera, Udemy, or LinkedIn Learning make sure to create a plan like a route to succeed in the upskilling like for example "Start this beginner course @..., then do this then this then this...... by the end you should be able to.... also keep it limited to 5 phases and 3 courses per phase`;
+
+const prompt = `
+You are helping someone with career upskilling. They currently work as a ${job}, but want to become a ${career}.
+They have ${adjustedDisability} — so your plan must be tailored for someone with this. Mention the disability in your response, and clearly explain how each course helps someone with it.
+
+Give a reasonable timeframe for that disability and career so spread the learning phases accordingly. DO NOT CHANGE THIS NUMBER, ur timeline MUST be basedon this number.
+
+Give:
+- A clear upskilling roadmap with **5 structured phases**
+- In each phase, suggest **3 specific courses or learning resources**
+- Include platform links (Coursera, Udemy, LinkedIn Learning) if possible
+- For each phase, explain how it supports someone with ${adjustedDisability}
+- Use bullet points or numbered structure for clarity
+- End with: “By the end of this plan, you should be able to…”
+
+Keep it concise, encouraging, and actionable.
+`;
+
 
     const result = await model.generateContent(prompt);
     const text = result.response.text();
 
-    // Convert Gemini AI response into a structured format
-    const resources = text.split("\n").filter(Boolean).map(item => ({
-      name: item,
-      link: "#" // Placeholder, replace with real links if needed
-    }));
+    const resources = text
+      .split("\n")
+      .filter(Boolean)
+      .map((line) => ({
+        name: line,
+        link: "#", // You can extract real links if needed later
+      }));
 
     res.json({ resources });
   } catch (error) {
-    console.error("Gemini API Error:", error.message);
+    console.error("❌ Gemini API Error:", error.message);
     res.status(500).json({ error: "Failed to fetch upskilling recommendations." });
   }
 });
+
 
 let quickChatSession = null; // ✅ store chat globally
 

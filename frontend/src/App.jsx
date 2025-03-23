@@ -4,6 +4,7 @@ import UserInfo from "./components/UserInfo";
 import FutureCareer from "./components/FutureCareer";
 import Results from "./components/Results";
 import ChatBot from "./components/ChatBot";
+import SuccessStories from "./components/SuccessStories";
 
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
       <Route path="/future-career" element={<FutureCareer />} />
       <Route path="/results" element={<Results />} />
       <Route path="/career-chat" element={<ChatBot />} />
+      <Route path="/success-stories" element={<SuccessStories />} />
+
+      
+
     </Routes>
   );
 }
