@@ -17,7 +17,7 @@ const stories = [
     disability: "Autism Spectrum Disorder",
     from: "Retail Cashier",
     to: "UX Designer",
-    linkedin: href="https://linkedin.com/in/aylinkaya",
+    linkedin: "https://linkedin.com/in/aylinkaya",
     img: aylin,
     description: "Upable helped me turn my passion for design into a career. Feel free to reach out if you're on the same path!"
   },
@@ -27,7 +27,7 @@ const stories = [
     disability: "ADHD",
     from: "Data Entry Clerk",
     to: "Business Analyst",
-    linkedin: href="https://linkedin.com/in/jasperliu",
+    linkedin: "https://linkedin.com/in/jasperliu",
     img: jasper,
     description: "From scattered thoughts to structured insights — Upable gave me tools and mentorship that changed everything."
   },
@@ -37,7 +37,7 @@ const stories = [
     disability: "Dyslexia",
     from: "Customer Service Rep",
     to: "QA Tester",
-    linkedin: href="https://linkedin.com/in/carlosmendes",
+    linkedin: "https://linkedin.com/in/carlosmendes",
     img: carlos,
     description: "Dyslexia didn’t stop me, and it shouldn’t stop you. I'm open to mentorship chats anytime!"
   },
@@ -47,7 +47,7 @@ const stories = [
     disability: "Autism",
     from: "Library Assistant",
     to: "Software Developer",
-    linkedin: href="https://linkedin.com/in/saranovak",
+    linkedin: "https://linkedin.com/in/saranovak",
     img: sara,
     description: "Coding clicked for me in a way nothing else had. Upable saw that and gave me structure. Let’s connect!"
   },
@@ -57,7 +57,7 @@ const stories = [
     disability: "ADHD",
     from: "Warehouse Worker",
     to: "Marketing Coordinator",
-    linkedin: href="https://linkedin.com/in/liamoreilly",
+    linkedin: "https://linkedin.com/in/liamoreilly",
     img: liam,
     description: "Structure and creative freedom together? It’s possible. Grateful to Upable for the roadmap."
   },
@@ -67,7 +67,7 @@ const stories = [
     disability: "Dyscalculia",
     from: "Receptionist",
     to: "HR Specialist",
-    linkedin: href="https://linkedin.com/in/fatimanoor",
+    linkedin: "https://linkedin.com/in/fatimanoor",
     img: fatima,
     description: "Numbers never made sense — but people always did. Upable helped me find the right path."
   },
@@ -77,7 +77,7 @@ const stories = [
     disability: "Autism Spectrum",
     from: "Janitor",
     to: "Technical Support",
-    linkedin: href="https://linkedin.com/in/noahsmith",
+    linkedin: "https://linkedin.com/in/noahsmith",
     img: noah,
     description: "Technical support is where I thrive. Let me know if I can help you start too!"
   },
@@ -87,7 +87,7 @@ const stories = [
     disability: "ADHD",
     from: "Factory Worker",
     to: "Digital Illustrator",
-    linkedin: href="https://linkedin.com/in/maitanaka",
+    linkedin: "https://linkedin.com/in/maitanaka",
     img: mai,
     description: "Upable gave me a way to turn creativity into a career. Happy to share tips or portfolio reviews!"
   },
@@ -97,7 +97,7 @@ const stories = [
     disability: "Dyslexia",
     from: "Security Guard",
     to: "Cybersecurity Analyst",
-    linkedin: href="https://linkedin.com/in/ahmedzidan",
+    linkedin: "https://linkedin.com/in/ahmedzidan",
     img: ahmed,
     description: "I struggled with reading, not with thinking. Cybersecurity made sense, and Upable helped me prove it."
   },
@@ -107,7 +107,7 @@ const stories = [
     disability: "Autism Spectrum",
     from: "Fast Food Worker",
     to: "Administrative Assistant",
-    linkedin: href="https://linkedin.com/in/emilychan",
+    linkedin: "https://linkedin.com/in/emilychan",
     img: emily,
     description: "Admin work fits my strengths. Feel free to contact me for mentorship or to view my portfolio!"
   }
