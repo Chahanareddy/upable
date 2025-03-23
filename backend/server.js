@@ -92,6 +92,15 @@ Give:
 - Use bullet points or numbered structure for clarity
 - End with: “By the end of this plan, you should be able to…”
 
+also follow this format
+**Phase 1: Title (# year)**  
+• Course 1 – [link]  
+• Course 2 – [link]  
+• Course 3 – [link]
+
+**Phase 2: ...**
+
+
 Keep it concise, encouraging, and actionable.
 `;
 

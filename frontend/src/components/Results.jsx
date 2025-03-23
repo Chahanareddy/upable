@@ -50,13 +50,13 @@ function Results() {
         </div>
       )}
 
-      <button
-        onClick={() => navigate("/success-stories")}
-        className="btn btn-secondary"
-        style={{ marginTop: "2rem" }}
-      >
-        View Success Stories
-      </button>
+<button
+  onClick={() => navigate("/success-stories")}
+  className="success-button"
+>
+  View Success Stories
+</button>
+
     </div>
   );
 }

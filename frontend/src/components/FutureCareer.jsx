@@ -57,16 +57,30 @@ function FutureCareer() {
         </>
       )}
 
-      {step === 2 && (
-        <>
-          <p>What career do you have in mind?</p>
-          <input
-            type="text"
-            placeholder="e.g. Software Engineer"
-            onBlur={(e) => handleInput("initialCareer", e.target.value)}
-          />
-        </>
-      )}
+{step === 2 && (
+  <>
+    <p>What career do you have in mind?</p>
+    <input
+      type="text"
+      placeholder="e.g. Software Engineer"
+      value={answers.initialCareer || ""}
+      onChange={(e) =>
+        setAnswers((prev) => ({ ...prev, initialCareer: e.target.value }))
+      }
+      className="form-input"
+    />
+    <button
+      type="button"
+      className="btn btn-primary"
+      style={{ marginTop: "1rem" }}
+      disabled={!answers.initialCareer}
+      onClick={() => setStep(3)}
+    >
+      Next
+    </button>
+  </>
+)}
+
 
       {step === 3 && (
         <>
@@ -85,7 +99,7 @@ function FutureCareer() {
         <>
           <p>Do you prefer remote, hybrid, or on-site work?</p>
           <div style={{ display: "flex", gap: "1rem" }}>
-            {["Remote", "Hybrid", "On-site"].map((option) => (
+            {["Remote", "Hybrid", "On-site", "Does Not Matter"].map((option) => (
               <button key={option} onClick={() => handleInput("workType", option)} className="btn btn-outline-secondary">
                 {option}
               </button>
@@ -147,38 +161,43 @@ function FutureCareer() {
       {loading && <p>Thinking...</p>}
 
       {step === 99 && (
-        <>
-          <p><strong>Here are some career paths you might like:</strong></p>
-          <ul>
-            {suggestions.map((s, i) => (
-              <li key={i}>
-                <label>
-                  <input
-                    type="radio"
-                    name="career"
-                    value={s}
-                    checked={selectedCareer === s}
-                    onChange={() => setSelectedCareer(s)}
-                  />{" "}
-                  {s}
-                </label>
-              </li>
-            ))}
-          </ul>
+  <div className="suggestion-step">
+    <p><strong>Here are some career paths you might like:</strong></p>
+    <div className="career-options">
+      {suggestions.map((s, i) => (
+        <label key={i} className="career-option">
+        <input
+          type="radio"
+          name="career"
+          value={s}
+          checked={selectedCareer === s}
+          onChange={() => setSelectedCareer(s)}
+        />
+        <span>{s}</span>
+      </label>
+      
+      ))}
+    </div>
 
-          <p>Or type your own career path:</p>
-          <input
-            value={finalCareer}
-            onChange={(e) => setFinalCareer(e.target.value)}
-            placeholder="Type your own career..."
-          />
-          
+    <p style={{ marginTop: "2rem" }}>Or type your own career path:</p>
+    <input
+      value={finalCareer}
+      onChange={(e) => setFinalCareer(e.target.value)}
+      placeholder="Type your own career..."
+      className="form-input"
+    />
 
-          <button type="button" onClick={handleConfirm} className="btn btn-success" style={{ marginTop: "1rem" }}>
-            Continue
-          </button>
-        </>
-      )}
+    <button
+      type="button"
+      onClick={handleConfirm}
+      className="btn btn-primary"
+      style={{ marginTop: "1.5rem" }}
+    >
+      Continue
+    </button>
+  </div>
+)}
+
     </div>
     
   );

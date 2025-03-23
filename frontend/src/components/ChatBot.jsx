@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import "./ChatBot.css";
 
 function ChatBot() {
   const [messages, setMessages] = useState([]);
@@ -38,8 +39,7 @@ function ChatBot() {
     <div className="container" style={{ padding: "2rem" }}>
       <h2>Ask Me Anything</h2>
 
-      <div style={{ maxHeight: "300px", overflowY: "auto", background: "#f4f4f4", padding: "1rem", borderRadius: "8px" }}>
-        {messages.map((msg, i) => (
+      <div className="chat-box">{messages.map((msg, i) => (
           <p key={i} style={{ textAlign: msg.role === "user" ? "right" : "left" }}>
             <strong>{msg.role === "user" ? "You" : "Bot"}:</strong> {msg.text}
           </p>
