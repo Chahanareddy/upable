@@ -16,14 +16,15 @@ function InvitationPage() {
         Welcome to the Upskilling App
       </h1>
       <button 
-        className="btn" // Apply the button class
+        className="btn" 
+        style={{ fontFamily: dyslexiaMode ? "dyslexic" : "Arial, sans-serif" }}
         onClick={() => navigate("/user-info")}
       >
         Start
       </button>
 
       <button
-        className="btn" // Apply the button class
+        className="btn dyslexic-font"
         onClick={toggleDyslexiaMode}
       >
         {dyslexiaMode ? "Switch to Standard Font" : "Switch to Dyslexia Font"}
