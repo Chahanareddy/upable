@@ -5,6 +5,7 @@ import FutureCareer from "./components/FutureCareer";
 import Results from "./components/Results";
 import ChatBot from "./components/ChatBot";
 import SuccessStories from "./components/SuccessStories";
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/webkit/OpenDyslexic.css" />
 
 
 function App() {

@@ -5,6 +5,8 @@ import axios from "axios";
 import SuccessStoriesButton from "./SuccessStoriesButton";
 
 function FutureCareer() {
+
+
   const navigate = useNavigate();
   const location = useLocation();
   const { job } = location.state || {};
@@ -15,6 +17,9 @@ function FutureCareer() {
   const [selectedCareer, setSelectedCareer] = useState("");
   const [finalCareer, setFinalCareer] = useState("");
   const [loading, setLoading] = useState(false);
+  const { disability } = location.state || {};
+
+  const isDyslexic = disability?.toLowerCase().includes("dyslex");
 
   const handleYes = () => setStep(2);
   const handleNo = () => setStep(6);
@@ -47,6 +52,7 @@ function FutureCareer() {
   };
 
   return (
+    <div className={isDyslexic ? "dyslexic-font" : ""}>
     <div className="container" style={{ padding: "2rem" }}>
         
       <h2>Explore Your Future Career</h2>
@@ -199,7 +205,7 @@ function FutureCareer() {
     </button>
   </div>
 )}
-
+</div>
     </div>
     
   );

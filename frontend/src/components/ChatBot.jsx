@@ -11,6 +11,7 @@ function ChatBot() {
   const navigate = useNavigate();
   const location = useLocation();
   const { job, career, disability } = location.state || {};
+  const isDyslexic = disability?.toLowerCase().includes("dyslex");
 
   
   const handleSend = async () => {
@@ -37,10 +38,11 @@ function ChatBot() {
   };
 
   return (
+    <div className={isDyslexic ? "dyslexic-font" : ""}>
     <div className="container" style={{ padding: "2rem" }}>
     <SuccessStoriesButton />
     
-      <h2>Hi, I'm your AI Assistant, <br></br>Ask Me Anything About Your Chosen Role!</h2>
+      <h2>Hi, I'm your Career Assistant, <br></br>Ask Me Anything About Your Chosen Role!</h2>
 
       <div className="chat-box">{messages.map((msg, i) => (
           <p key={i} style={{ textAlign: msg.role === "user" ? "right" : "left" }}>
@@ -66,6 +68,7 @@ function ChatBot() {
       >
         Continue to Results →
       </button>
+    </div>
     </div>
   );  
 }

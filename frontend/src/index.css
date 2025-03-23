@@ -8,3 +8,16 @@ body {
   -ms-overflow-style: none;    /* IE/Edge */
   overflow-y: scroll;          /* Keep height without visible scrollbar */
 }
+
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/otf/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.dyslexic-font {
+  font-family: 'OpenDyslexic', Arial, sans-serif;
+}
+

@@ -4,6 +4,8 @@ function InvitationPage() {
   const navigate = useNavigate();
 
   return (
+
+    
     <div
       style={{
         display: "flex",
@@ -18,7 +20,14 @@ function InvitationPage() {
         padding: "20px",
       }}
     >
+        <img
+  src="/logo.png"
+  alt="Upable Logo"
+  className="upable-logo"
+/>
       <h1 style={{ fontSize: "32px", color: "#e5bf26", marginBottom: "20px" }}>
+
+      
         Welcome to the Upskilling App
       </h1>
       <button

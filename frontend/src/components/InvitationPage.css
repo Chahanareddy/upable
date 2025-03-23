@@ -36,3 +36,12 @@
   .btn:hover {
     background-color: #c5a41f; 
   }
+
+  .upable-logo {
+    position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px; /* adjust size */
+  height: auto;
+  }
+  

@@ -15,6 +15,8 @@ function Results() {
   const [currentPhase, setCurrentPhase] = useState(0);
   const [loading, setLoading] = useState(true);
   const [done, setDone] = useState([]);
+  const isDyslexic = disability?.toLowerCase().includes("dyslex");
+  
 
   useEffect(() => {
     if (job && career) {
@@ -43,7 +45,8 @@ function Results() {
   };
 
   return (
-    
+  
+<div className={isDyslexic ? "dyslexic-font" : ""}>
     <div className="results-container">
     <SuccessStoriesButton />
       <h2>📚 Roadmap to <em>{career}</em></h2>
@@ -82,6 +85,7 @@ function Results() {
           )}
         </>
       )}
+    </div>
     </div>
     
   );
